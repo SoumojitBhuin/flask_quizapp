@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Webpage - Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+              margin-top: 20px;
+        }
+
+        .table-container {
+        width: 100%;
+        overflow-x: auto;
+        margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 600px; /* Ensures the table does not shrink too much */
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 18px;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+            font-size: 20px;
+        }
+
+        a, .btn {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .btn {
+            cursor: pointer;
+            border: none;
+        }
+
+        .add-btn {
+            background-color: #28a745;
+        }
+
+        .update-btn {
+            background-color: #ffc107;
+        
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+
+        }
+
+        a:hover, .btn:hover {
+            opacity: 0.8;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+        tr:hover {
+            background-color: #e6f7ff;
+        }
+
+        td a {
+            color: #007BFF;
+        }
+
+        td a:hover {
+            color: #0056b3;
+        }
+
+        .input-container {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+            input {
+                padding: 10px;
+                font-size: 16px;
+                width: 250px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+            }
+            
+            .search-container {
+                margin: 20px 0;
+                padding: 10px;
+            }
+            
+            .search-form {
+                display: flex;
+                gap: 10px;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            
+            .search-input {
+                flex: 1;
+                padding: 8px 12px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 16px;
+            }
+            
+            .search-button {
+                padding: 8px 16px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            
+            .search-button:hover {
+                background-color: #0056b3;
+            }
+
+            .no-results {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            }
+
+            @media screen and (max-width: 768px) {
+            th, td {
+                padding: 10px;
+                font-size: 16px;
+            }
+
+            .btn {
+                padding: 6px 10px;
+                margin-top: 6px;
+            }
+            .input-container form {
+                flex-direction: column;
+                align-items: center;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            th, td {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .btn {
+                padding: 5px 8px;
+            }
+
+            table {
+                min-width: 100%;
+                margin-top: 6px;
+            }
+            .input-container form {
+                flex-direction: column;
+                align-items: center;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+
+</head>
+<body>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div id="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    <h1>Welcome to the ADMIN DASHBOARD</h1>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <!-- Navbar Brand -->
+            <a class="navbar-brand" href="#">Admin Dashboard</a>
+    
+            <!-- Navbar Toggler (For Mobile) -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <!-- Navbar Items -->
+            <div class="collapse navbar-collapse justify-content-end" id="adminNavbar">
+                <ul class="navbar-nav d-flex align-items-center">
+                    <li class="nav-item">
+                        <a class="btn btn-primary me-2 mb-2 mb-lg-0" href="{{ url_for('admin_dashboard', level='subjects') }}">Quiz Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-secondary me-2 mb-2 mb-lg-0" href="{{ url_for('user_management') }}">User Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-danger mb-2 mb-lg-0" href="{{ url_for('login')}}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="search-container">
+        <form action="{{ url_for('search', level=level) }}" method="POST" class="search-form">
+            <input type="text" 
+                   name="search" 
+                   placeholder="Search {{ level }}..." 
+                   value="{{ search_query if search_query else '' }}"
+                   class="search-input">
+            <button type="submit" class="search-button">Search</button>
+        </form>
+    </div>
+    
+    <div class="container">
+        <h2 id="table-title">{{ level.capitalize() }} List</h2>
+
+        <!-- Input field for adding new subjects, chapters, quizzes, or questions -->
+        {% if level=="subjects" %}
+        <div class="input-container">
+            <form action="{{ url_for('add_item', level=level) }}" method="POST">
+                <input type="text" name="new_item" placeholder="Enter new {{ level }}">
+                <input type="text" name="Description" placeholder="Enter new {{ level }} description">
+                <button type="submit" class="btn add-btn">Add</button>
+            </form>
+        </div>
+        {%elif level=="chapter"%}
+        <div class="input-container">
+            
+                <form action="{{ url_for('add_item', level=level) }}" method="POST">
+                    
+                    <input type="text" name="new_item" placeholder="Enter new {{ level }}">
+                    <input type="text" name="Description" placeholder="Enter new {{ level }} description">
+                    <button type="submit" class="btn add-btn">Add</button>
+                </form>
+        </div>
+
+        {%elif level=="quizzes"%}
+        <div class="input-container">
+            
+                <form action="{{ url_for('add_item', level=level) }}" method="POST">
+                    
+                    <input type="text" name="new_item" placeholder="Enter new {{ level }}">
+                    <input type="date" name="date" placeholder="Enter the date" class="editable">
+                    <input type="number" name="time" placeholder="Enter the time" class="editable">
+                    <button type="submit" class="btn add-btn">Add</button>
+                </form>
+        </div>
+
+        {%elif level=="questions"%}
+        <div class="input-container">
+            
+                <form action="{{ url_for('add_item', level=level) }}" method="POST">
+                    
+                    <input type="text" name="question" placeholder="Enter new {{ level }}">
+                    <input type="text" name="option 1" placeholder="Enter option">
+                    <input type="text" name="option 2" placeholder="Enter option">
+                    <input type="text" name="option 3" placeholder="Enter option">
+                    <input type="text" name="option 4" placeholder="Enter option">
+                    <input type="text" name="correct_option" placeholder="Enter option">
+                    <button type="submit" class="btn add-btn">Add</button>
+                </form>
+        </div>
+        {% endif %}
+        
+        {% if level == "subjects" %}
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Data</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for subject in data %}
+                    <tr>
+                        <td>{{ subject.Name }}</td>
+                        <td>
+                            <form action="{{ url_for('update_item', level='subjects', name=subject.Name) }}" method="POST" style="display:inline;">
+                                <input type="text" name="subname" value="{{ subject.Name }}" class="editable">
+                                <input type="text" name="description" value="{{ subject.Description }}" class="editable">
+                                
+                            
+                        </td>
+                        <td>
+                            <a href="{{ url_for('admin_dashboard_chapter', level='chapter', sub_name=subject.Name) }}">
+                                View Chapters
+                            </a>
+                            <button type="submit" class="btn update-btn">Update</button></form>
+
+                            <form action="{{ url_for('delete_item', level=level, name=subject.Name) }}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn delete-btn" onclick="return confirm('Are you sure you want to delete this subject?')">Delete</button>
+                            </form>
+                            
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+
+    {% elif level == "chapter" %}
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Chapter</th>
+                    <th>Data</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for chapter in data %}
+                <tr>
+                    <td>{{ chapter.Name }}</td>
+                    <td>
+                        <form action="{{ url_for('update_item', level='chapter', name=chapter.Name) }}" method="POST" style="display:inline;">
+                            <input type="text" name="chapname" value="{{ chapter.Name }}" class="editable">
+                            <input type="text" name="description" value="{{ chapter.Description }}" class="editable">
+                            
+                    </td>
+                    <td>
+                        <a href="{{ url_for('admin_dashboard_quiz', level='quizzes', chap_name=chapter.Name, subject='subjects') }}">
+                            View Quizzes
+                        </a>
+                        <button type="submit" class="btn update-btn">Update</button>
+                        </form>
+                        <form action="{{ url_for('delete_item', level=level, name=chapter.Name) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn delete-btn" onclick="return confirm('Are you sure you want to delete this chapter?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+
+
+
+        {% elif level == "quizzes" %}
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Quiz</th>
+                        <th>Data</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for quiz in data %}
+                    <tr>
+                        <td>{{ quiz.quiz_no }}</td>
+                        <td>
+                            <form action="{{ url_for('update_item', level='quizzes', name=quiz.id) }}" method="POST" style="display:inline;">
+                                <input type="text" name="quizno" value="{{quiz.quiz_no}}" class="editable">
+                                <input type="date" name="date" value="{{quiz.date_of_quiz}}" class="editable">
+                                <input type="number" name="time" value="{{quiz.time_duration}}" class="editable">
+                        </td>
+                        <td>
+                                
+                            <a href="{{ url_for('admin_dashboard_questions', level='questions', subject='subject', chapter='chapter', quiz_no=quiz.id) }}">
+                                View Questions
+                            </a>
+                            <button type="submit" class="btn update-btn">Update</button>
+                            </form>
+                            <form action="{{ url_for('delete_item', level=level, name=quiz.id) }}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn delete-btn" onclick="return confirm('Are you sure you want to delete this quiz?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        
+    {% elif level == "questions" %}
+    <div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Options</th>
+                <th>Correct Option</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in data %}
+            <tr>
+                <form action="{{ url_for('update_item', level='questions', name=question.Question_Statement|replace('/', '%2F')) }}" method="POST">
+                    <td>
+                        <input type="hidden" name="original_question" value="{{ question.Question_Statement }}">
+                        <input type="text" name="question" value="{{ question.Question_Statement }}" class="editable">
+                    </td>
+                    <td>
+                        <input type="text" name="option 1" value="{{ question.Option1 }}" class="editable"><br>
+                        <input type="text" name="option 2" value="{{ question.Option2 }}" class="editable"><br>
+                        <input type="text" name="option 3" value="{{ question.Option3 }}" class="editable"><br>
+                        <input type="text" name="option 4" value="{{ question.Option4 }}" class="editable">
+                    </td>
+                    <td>
+                        <select name="correct_option">
+                            <option value="{{ question.Option1 }}" {% if question.correct_option == question.Option1 %}selected{% endif %}>{{ question.Option1 }}</option>
+                            <option value="{{ question.Option2 }}" {% if question.correct_option == question.Option2 %}selected{% endif %}>{{ question.Option2 }}</option>
+                            <option value="{{ question.Option3 }}" {% if question.correct_option == question.Option3 %}selected{% endif %}>{{ question.Option3 }}</option>
+                            <option value="{{ question.Option4 }}" {% if question.correct_option == question.Option4 %}selected{% endif %}>{{ question.Option4 }}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn update-btn">Update</button>
+                    </form>
+                    <form action="{{ url_for('delete_item', level=level, name=question.Question_Statement|urlencode) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn delete-btn" onclick="return confirm('Are you sure you want to delete this question?')">Delete</button>
+                    </form>
+                    </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endif %}
+<script>
+    setTimeout(function() {
+        var flashMessages = document.getElementById("flash-messages");
+        if (flashMessages) {
+            flashMessages.style.transition = "opacity 0.5s ease-out";
+            flashMessages.style.opacity = "0";
+            setTimeout(() => flashMessages.remove(), 500);
+        }
+    }, 3000);
+</script>
+
+
+
+    </div>
+</body>
+</html>
