@@ -31,7 +31,7 @@
 ### **Steps to Install**
 1. Clone the repository:
    ```bash
-   git clone https://github.com/SoumojitBhuin/flask_quizapp/edit/main
+   git clone https://github.com/SoumojitBhuin/flask_quizapp
    cd quiz-master
    ```
 2. Create a virtual environment and activate it:
