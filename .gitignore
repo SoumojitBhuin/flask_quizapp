@@ -1,0 +1,32 @@
+# Ignore Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environment
+venv/
+env/
+
+# Ignore IDE and editor files
+.vscode/
+*.swp
+*.swo
+.idea/
+
+# Ignore logs and databases
+*.log
+*.sqlite3
+
+# Ignore environment variables
+.env
+.env.local
+*.secret
+
+# Ignore compressed files
+*.zip
+*.tar.gz
+*.rar
+
+# Ignore deployment files (if not needed in repo)
+vercel.json
