@@ -29,7 +29,7 @@
 - pip (Python package manager)
 
    ```
-## 1️⃣ Step 1: Extract the ZIP File  
+## 1️⃣ Step 1: Clone the repository  
 Clone the repository:
    ```bash
    git clone https://github.com/SoumojitBhuin/flask_quizapp
@@ -56,15 +56,20 @@ Activate it:
 
 ---
 
-## 3️⃣ Step 4: Install Dependencies  
+## 3️⃣ Step 3: Install Dependencies  
+Run the following to install all the requirements  
+  ```bash
+pip freeze > reqiurements.txt
+```
 Run the following command to install all required packages:  
 ```bash
+
 pip install flask flask-sqlalchemy sqlalchemy matplotlib python-dotenv pyyaml flask-login flask-session
 ```
 
 ---
 
-## 4️⃣ Step 5: Verify Installation  
+## 4️⃣ Step 4: Verify Installation  
 Check if all libraries are installed correctly:  
 ```bash
 python -c "import flask, sqlalchemy, matplotlib, dotenv, yaml, flask_login, flask_session; print('All libraries installed successfully!')"
@@ -72,7 +77,7 @@ python -c "import flask, sqlalchemy, matplotlib, dotenv, yaml, flask_login, flas
 
 ---
 
-## 5️⃣ Step 6: Run the Flask Application  
+## 5️⃣ Step 5: Run the Flask Application  
 Find the main script (e.g., `app.py`) and run:  
 ```bash
 python app.py
@@ -86,7 +91,7 @@ flask run
 
 ---
 
-## 6️⃣ Step 7: Open in Browser  
+## 6️⃣ Step 6: Open in Browser  
 If the app starts successfully, it will show:  
 ```
 Running on http://127.0.0.1:5000/
