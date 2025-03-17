@@ -9,8 +9,8 @@ load_dotenv()
 app = Flask(__name__)
 
 # Database Configuration
-db_path = os.path.join("/tmp", "database.db")
-app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 # Importing Models and Initializing Database

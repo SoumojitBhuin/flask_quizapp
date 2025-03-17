@@ -1,0 +1,25 @@
+# Exported from Render on 2025-03-17T19:20:21Z
+services:
+- type: web
+  name: flask_quizapp
+  runtime: python
+  repo: https://github.com/SoumojitBhuin/flask_quizapp
+  plan: free
+  envVars:
+  - key: SQLALCHEMY_TRACK_MODIFICATIONS
+    sync: false
+  - key: SQLALCHEMY_DATABASE_URI
+    sync: false
+  - key: SECRET_KEY
+    sync: false
+  - key: FLASK_APP
+    sync: false
+  - key: FLASK_DEBUG
+    sync: false
+  region: oregon
+  buildCommand: pip install -r requirements.txt
+  startCommand: gunicorn app:app
+  domains:
+  - quizappflask.com
+  - www.quizappflask.com
+version: "1"

@@ -30,3 +30,4 @@ env/
 
 # Ignore deployment files (if not needed in repo)
 vercel.json
+.vercel
