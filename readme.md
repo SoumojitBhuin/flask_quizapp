@@ -28,70 +28,31 @@
 - Python (>= 3.7)
 - pip (Python package manager)
 
-   ```
-## 1️⃣ Step 1: Extract the ZIP File  
-Clone the repository:
+### **Steps to Install**
+1. Clone the repository:
    ```bash
    git clone https://github.com/SoumojitBhuin/flask_quizapp
    cd quiz-master
-  ```
+   ```
+2. Create a virtual environment and activate it:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use: venv\Scripts\activate
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Set up environment variables:
+   - Create a `.env` file and add necessary configurations (e.g., secret key, database URI).
 
----
-
-## 2️⃣ Step 2: Create and Activate a Virtual Environment  
-To manage dependencies properly, create a virtual environment:  
-```bash
-python -m venv venv
-```
-
-Activate it:  
-- **Windows (CMD/PowerShell):**  
-  ```bash
-  venv\Scripts\activate
-  ```
-- **Linux/macOS:**  
-  ```bash
-  source venv/bin/activate
-  ```
-
----
-
-## 3️⃣ Step 4: Install Dependencies  
-Run the following command to install all required packages:  
-```bash
-pip install flask flask-sqlalchemy sqlalchemy matplotlib python-dotenv pyyaml flask-login flask-session
-```
-
----
-
-## 4️⃣ Step 5: Verify Installation  
-Check if all libraries are installed correctly:  
-```bash
-python -c "import flask, sqlalchemy, matplotlib, dotenv, yaml, flask_login, flask_session; print('All libraries installed successfully!')"
-```
-
----
-
-## 5️⃣ Step 6: Run the Flask Application  
-Find the main script (e.g., `app.py`) and run:  
-```bash
-python app.py
-```
-OR, if using Flask CLI:  
-```bash
-export FLASK_APP=app.py  # macOS/Linux  
-set FLASK_APP=app.py      # Windows  
-flask run
-```
-
----
-
-## 6️⃣ Step 7: Open in Browser  
-If the app starts successfully, it will show:  
-```
-Running on http://127.0.0.1:5000/
-```
-Open **http://127.0.0.1:5000/** in your browser.
+5. Run the application:
+   ```bash
+   flask run
+   ```
+6. Open a web browser and go to:
+   ```
+   http://127.0.0.1:5000/
    ```
 
 ## **Database Schema**
